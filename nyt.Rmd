@@ -22,6 +22,16 @@ str(data)
 We have downloaded and viewed our data. Now we do some EDA. 
 
 ```{r}
+hist(data$Age, main="", xlab="Age")
+
+hist(data$Impressions, main="", xlab="Number of Impressions")
+
+hist(data$Clicks, main="", xlab="Number of Clicks")
+
+```
+
+Now let's segment!
+```{r}
 #create a new age group for each age given the following cut-offs: 
 data$Age_Group <- cut(data$Age, c(-Inf, 18, 24, 34, 44, 54, 65, Inf))
 #name levels of new age group variable
