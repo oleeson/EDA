@@ -11,34 +11,34 @@ output:
 
 ```{r}
 #set url as object
-fileLocation <- "http://stat.columbia.edu/~rachel/datasets/nyt3.csv"
+file <- "http://stat.columbia.edu/~rachel/datasets/nyt3.csv"
 #read in nyt data
-data1 <- read.csv(url(fileLocation))
+data <- read.csv(url(file))
 #view output
-head(data1)
-str(data1)
+head(data)
+str(data)
 ```
 
 We have downloaded and viewed our data. Now we do some EDA. 
 
 ```{r}
 #create a new age group for each age given the following cut-offs: 
-data1$Age_Group <- cut(data1$Age, c(-Inf, 18, 24, 34, 44, 54, 65, Inf))
+data$Age_Group <- cut(data$Age, c(-Inf, 18, 24, 34, 44, 54, 65, Inf))
 #name levels of new age group variable
-levels(data1$Age_Group) <- c("<18", "18-24", "25-34", "35-44", "45-54", "55-64", "65+")
+levels(data$Age_Group) <- c("<18", "18-24", "25-34", "35-44", "45-54", "55-64", "65+")
 #check data again
-head(data1)
+head(data)
 ```
 
 We have created our age groups. Now we want to examine click-through rate
 
 ```{r}
 #create a new dataset that only holds impressions
-d1 <- subset(data1, Impressions>0)
+new <- subset(data, Impressions>0)
 #create a new variable for click through rate
-d1$CTR <- d1$Clicks/d1$Impressions
+new$CTR <- new$Clicks/new$Impressions
 #what does that look like?
-head(d1)
+head(new)
 ```
 
 Now let's graph some data. 
@@ -46,11 +46,11 @@ Now let's graph some data.
 ```{r}
 library(ggplot2) # used for visualizations
 #plot of impressions by age group
-ggplot(subset(d1, Impressions>0), aes(x=Impressions, fill=Age_Group))+
+ggplot(subset(new, Impressions>0), aes(x=Impressions, fill=Age_Group))+
   geom_histogram(binwidth=1)
 
 #Plot of click through rate by age group
-ggplot(subset(d1, CTR>0), aes(x=CTR, fill=Age_Group))+
+ggplot(subset(new, CTR>0), aes(x=CTR, fill=Age_Group))+
    labs(title="Click-through rate by age group (05/01/2012)")+
    geom_histogram(binwidth=.025)
 
